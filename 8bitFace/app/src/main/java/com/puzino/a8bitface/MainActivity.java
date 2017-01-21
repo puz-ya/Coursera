@@ -1,5 +1,7 @@
 package com.puzino.a8bitface;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,6 +20,11 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        FragmentManager fragmentManager = getFragmentManager();
+        Fragment fr1 = fragmentManager.findFragmentById(R.id.fragment_image_3buttons);
+        Fragment fr2 = fragmentManager.findFragmentById(R.id.fragment_select_images);
+
     }
 
     @Override
@@ -35,8 +42,16 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id){
+            case R.id.action_settings:
+                break;
+
+            case R.id.action_about:
+                break;
+
+            case R.id.action_exit:
+                this.finish();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
