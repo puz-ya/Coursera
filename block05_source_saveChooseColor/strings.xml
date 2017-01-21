@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Block05</string>
+    <string name="radioButton_blue">Blue</string>
+    <string name="radioButton_magenta">Magenta</string>
+    <string name="radioButton_yellow">Yellow</string>
+</resources>
