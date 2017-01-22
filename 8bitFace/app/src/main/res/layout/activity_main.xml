@@ -23,6 +23,16 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="256dp"
+        android:layout_height="256dp"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="16dp"
+        android:src="@drawable/no_avatar"
+        android:contentDescription="@string/app_name"
+        />
+
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"

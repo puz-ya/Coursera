@@ -8,25 +8,10 @@
     android:layout_height="wrap_content"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
+
+    android:orientation="horizontal"
+    android:gravity="center_horizontal"
    >
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="256dp"
-        android:layout_height="256dp"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/no_avatar"
-        android:contentDescription="@string/app_name"
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        >
 
         <Button
             android:id="@+id/button_save"
@@ -51,8 +36,6 @@
             android:text="@string/button_share"
             android:onClick="onClickShare"
             />
-
-    </LinearLayout>
 
 </LinearLayout>
 
