@@ -1,13 +1,23 @@
 package com.puzino.a8bitface;
 
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -21,7 +31,8 @@ public class MainFragment02Buttons extends Fragment {
     Button mPlus;
     Button mMinus;
 
-    View mView;
+    Activity mActivity;
+    View mFragmentView;
 
     public MainFragment02Buttons() {
     }
@@ -38,7 +49,7 @@ public class MainFragment02Buttons extends Fragment {
             mBody = savedInstanceState.getInt("bodyID");
         }
 
-        // Listener that acts when profile is selected
+        // Listener that acts when +\- is clicked
         View.OnClickListener mListener = new View.OnClickListener() {
 
             @Override
@@ -67,7 +78,9 @@ public class MainFragment02Buttons extends Fragment {
 
                 }
                 //update all textViews
-                updateAllViews();
+                updateAllTextViews();
+                //change ImageView
+                updateMainImage();
             }
         };
 
@@ -90,14 +103,24 @@ public class MainFragment02Buttons extends Fragment {
         return view;
     }
 
+    //if we recreate Fragment, start from here
     @Override
     public void onStart(){
         super.onStart();
 
-        mView = getView();
-        if(mView != null){
+        mFragmentView = getView();
+        if(mFragmentView != null){
 
-            updateAllViews();
+            updateAllTextViews();
+        }
+    }
+
+    @Override   //new version, NO (Activity activity) :\
+    public void onAttach(Context context){
+        super.onAttach(context);
+
+        if(getActivity() != null){
+            mActivity = getActivity();
         }
     }
 
@@ -143,15 +166,76 @@ public class MainFragment02Buttons extends Fragment {
         return num;
     }
 
-    public void updateAllViews(){
-        TextView textViewHat = (TextView) mView.findViewById(R.id.textView_hat_number);
+    public void updateAllTextViews(){
+        TextView textViewHat = (TextView) mFragmentView.findViewById(R.id.textView_hat_number);
         textViewHat.setText(Integer.toString(mHat));
 
-        TextView textViewHead = (TextView) mView.findViewById(R.id.textView_head_number);
+        TextView textViewHead = (TextView) mFragmentView.findViewById(R.id.textView_head_number);
         textViewHead.setText(Integer.toString(mHead));
 
-        TextView textViewBody = (TextView) mView.findViewById(R.id.textView_body_number);
+        TextView textViewBody = (TextView) mFragmentView.findViewById(R.id.textView_body_number);
         textViewBody.setText(Integer.toString(mBody));
     }
 
+    public void updateMainImage(){
+        if(mActivity != null) {
+            ImageView imageView = (ImageView) mActivity.findViewById(R.id.imageView);
+
+            int hatImage = HatsData.getImageFromData(mHat);
+            int headImage = HeadsData.getImageFromData(mHead);
+            int bodyImage = BodysData.getImageFromData(mBody);
+
+            Drawable drawableHat = ResourcesCompat.getDrawable(getResources(), hatImage, null);
+            Drawable drawableHead = ResourcesCompat.getDrawable(getResources(), headImage, null);
+            Drawable drawableBody = ResourcesCompat.getDrawable(getResources(), bodyImage, null);
+
+            Bitmap bitmapHat = null;
+            Bitmap bitmapHead = null;
+            Bitmap bitmapBody = null;
+            try {
+                bitmapHat = ((BitmapDrawable) drawableHat).getBitmap();
+                bitmapHead = ((BitmapDrawable) drawableHead).getBitmap();
+                bitmapBody = ((BitmapDrawable) drawableBody).getBitmap();
+            }catch (NullPointerException ex){
+                Log.d("Fragment2: ",ex.getMessage());
+            }
+
+            if(bitmapHat == null || bitmapHead == null || bitmapBody == null){
+                return;
+            }
+
+            Bitmap scaledBitmapHat = Bitmap.createScaledBitmap(bitmapHat, 512, 512, true);
+            Bitmap scaledBitmapHead = Bitmap.createScaledBitmap(bitmapHead, 512, 512, true);
+            Bitmap scaledBitmapBody = Bitmap.createScaledBitmap(bitmapBody, 512, 512, true);
+
+            Bitmap combineImages = overlay(scaledBitmapBody, scaledBitmapHead, scaledBitmapHat);
+            if (combineImages != null) {
+                imageView.setImageBitmap(combineImages);
+            }
+        }
+    }
+
+    //we need to overlap all 3 images - hat, head, body in 1
+    public static Bitmap overlay(Bitmap bmp1Body, Bitmap bmp2Head, Bitmap bmp3Hat)
+    {
+        try
+        {
+            //TODO: our images is same size 512 - no need to worry here
+            int maxWidth = (bmp1Body.getWidth() > bmp2Head.getWidth() ? bmp1Body.getWidth() : bmp2Head.getWidth());
+            int maxHeight = (bmp1Body.getHeight() > bmp2Head.getHeight() ? bmp1Body.getHeight() : bmp2Head.getHeight());
+
+            Bitmap bmOverlay = Bitmap.createBitmap(maxWidth, maxHeight, bmp1Body.getConfig());
+            Canvas canvas = new Canvas(bmOverlay);
+            canvas.drawBitmap(bmp1Body, 0, 0, null);
+            canvas.drawBitmap(bmp2Head, 0, 0, null);
+            canvas.drawBitmap(bmp3Hat, 0, 0, null);
+            return bmOverlay;
+
+        } catch (Exception e)
+        {
+            // TODO: handle exception
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
