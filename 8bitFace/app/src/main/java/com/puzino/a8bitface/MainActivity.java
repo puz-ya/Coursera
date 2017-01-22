@@ -2,6 +2,7 @@ package com.puzino.a8bitface;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,7 +10,12 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+implements MainFragment01Image.FragmentInterface{
+
+    private int mHat = 1;
+    private int mHead = 1;
+    private int mBody = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +24,12 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        if(savedInstanceState != null){
+            mHat = savedInstanceState.getInt("hatID");
+            mHead = savedInstanceState.getInt("headID");
+            mBody = savedInstanceState.getInt("bodyID");
+        }
 
         FragmentManager fragmentManager = getFragmentManager();
         Fragment fr1 = fragmentManager.findFragmentById(R.id.fragment_image_3buttons);
@@ -54,4 +66,46 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+    //setters for this activity and fragment2
+    public void setHat(int input){
+        mHat = input;
+    }
+    public void setHead(int input){
+        mHead = input;
+    }
+    public void setBody(int input){
+        mBody = input;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        savedInstanceState.putInt("hatID", mHat);
+        savedInstanceState.putInt("headID", mHead);
+        savedInstanceState.putInt("bodyID", mBody);
+    }
+
+    //pressed Save to button
+    @Override
+    public void itemSave(){
+        Intent intent = new Intent(this, SaveActivity.class);
+        intent.putExtra("hat", mHat);
+        intent.putExtra("head", mHead);
+        intent.putExtra("body", mBody);
+        startActivity(intent);
+    }
+
+    //pressed Load
+    @Override
+    public void itemLoad(){
+
+    }
+    //pressed Share button
+    @Override
+    public void itemShare(){
+        Intent intent = new Intent(this, ShareActivity.class);
+        startActivity(intent);
+    }
+
 }

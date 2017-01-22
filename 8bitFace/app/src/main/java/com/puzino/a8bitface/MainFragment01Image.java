@@ -13,9 +13,11 @@ import android.widget.Button;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainFragment01Image extends Fragment {
+public class MainFragment01Image extends Fragment implements View.OnClickListener{
 
     private Activity mActivity = null;
+    private FragmentInterface mFragmentInterface;
+
 
     public MainFragment01Image() {
     }
@@ -26,32 +28,13 @@ public class MainFragment01Image extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_image_3buttons, container, false);
 
-        // Listener that acts when +\- is clicked
-        View.OnClickListener mListener = new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                switch (v.getId()) {
-                    case R.id.button_save:
-                        onNewSaveActivity();
-                        break;
-                    case R.id.button_load:
-                        onLoadSavedProperties();
-                        break;
-                    case R.id.button_share:
-                        onShareActivity();
-                        break;
-                }
-            }
-        };
-
         // Attach clicks to Minus buttons
         Button button = (Button) view.findViewById(R.id.button_save);
-        button.setOnClickListener(mListener);
+        button.setOnClickListener(this);
         button = (Button) view.findViewById(R.id.button_load);
-        button.setOnClickListener(mListener);
+        button.setOnClickListener(this);
         button = (Button) view.findViewById(R.id.button_share);
-        button.setOnClickListener(mListener);
+        button.setOnClickListener(this);
 
         return view;
     }
@@ -62,9 +45,20 @@ public class MainFragment01Image extends Fragment {
 
         if(context instanceof Activity){
             mActivity = (Activity) context;
+
+            //get interface
+            this.mFragmentInterface = (FragmentInterface) mActivity;
         }
     }
 
+    //list of interfaces
+    static interface FragmentInterface{
+        void itemSave();
+        void itemLoad();
+        void itemShare();
+    }
+
+    /*
     //new Activity: save configuration, save file (internal or SD)
     public void onNewSaveActivity(){
         Intent intent = new Intent(mActivity, SaveActivity.class);
@@ -81,5 +75,28 @@ public class MainFragment01Image extends Fragment {
     public void onShareActivity(){
         Intent intent = new Intent(mActivity, ShareActivity.class);
         startActivity(intent);
+    }
+    //*/
+
+    // acts when +\- is clicked
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.button_save:
+                if(mFragmentInterface != null){
+                    mFragmentInterface.itemSave();
+                }
+                break;
+            case R.id.button_load:
+                if(mFragmentInterface != null){
+                    mFragmentInterface.itemLoad();
+                }
+                break;
+            case R.id.button_share:
+                if(mFragmentInterface != null){
+                    mFragmentInterface.itemShare();
+                }
+                break;
+        }
     }
 }

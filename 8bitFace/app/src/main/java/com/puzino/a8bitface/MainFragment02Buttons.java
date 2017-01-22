@@ -35,7 +35,7 @@ public class MainFragment02Buttons extends Fragment {
     Button mPlus;
     Button mMinus;
 
-    Activity mActivity = null;
+    MainActivity mActivity = null;
     View mFragmentView = null;
 
     public MainFragment02Buttons() {
@@ -114,8 +114,8 @@ public class MainFragment02Buttons extends Fragment {
     public void onAttach(Context context){
         super.onAttach(context);
 
-        if(context instanceof Activity){
-            mActivity = (Activity) context;
+        if(context instanceof MainActivity){
+            mActivity = (MainActivity) context;
         }
     }
 
@@ -192,6 +192,12 @@ public class MainFragment02Buttons extends Fragment {
 
     public void updateMainImage(){
         if(mActivity != null) {
+            //set new IDs
+            mActivity.setHat(mHat);
+            mActivity.setHead(mHead);
+            mActivity.setBody(mBody);
+
+            //now get ImageView and set Bitmaps
             ImageView imageView = (ImageView) mActivity.findViewById(R.id.imageView);
 
             int hatImage = HatsData.getImageFromData(mHat);
