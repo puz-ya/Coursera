@@ -18,7 +18,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/button_save"
-            android:onClick="onClickSaveTo"
             />
 
         <Button
@@ -26,7 +25,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/button_load"
-            android:onClick="onClickLoadNumbers"
             />
 
         <Button
@@ -34,7 +32,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/button_share"
-            android:onClick="onClickShare"
             />
 
 </LinearLayout>

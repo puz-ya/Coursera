@@ -22,5 +22,7 @@
     <string name="textView_body_number">01</string>
 
     <string name="help">Help!</string>
+    <string name="title_activity_save">SaveActivity</string>
+    <string name="title_activity_share">ShareActivity</string>
 
 </resources>

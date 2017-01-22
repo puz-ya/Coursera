@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.puzino.a8bitface.MainActivity"
+
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    tools:context="com.puzino.a8bitface.MainActivity">
+    >
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -25,35 +32,31 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="256dp"
-        android:layout_height="256dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_gravity="center_horizontal"
         android:paddingTop="16dp"
         android:src="@drawable/no_avatar"
         android:contentDescription="@string/app_name"
         />
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
+    <fragment
+        android:id="@+id/fragment_image_3buttons"
+        android:name="com.puzino.a8bitface.MainFragment01Image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout="@layout/fragment_image_3buttons"
+        />
 
-              android:id="@+id/fragment_image_3buttons"
-              android:name="com.puzino.a8bitface.MainFragment01Image"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              app:layout_behavior="@string/appbar_scrolling_view_behavior"
-              tools:layout="@layout/fragment_image_3buttons"/>
+    <fragment
+        android:id="@+id/fragment_select_images"
+        android:name="com.puzino.a8bitface.MainFragment02Buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout="@layout/fragment_select_images"
+        />
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-
-              android:id="@+id/fragment_select_images"
-              android:name="com.puzino.a8bitface.MainFragment02Buttons"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              app:layout_behavior="@string/appbar_scrolling_view_behavior"
-              tools:layout="@layout/fragment_select_images"/>
-
+    <!-- app:layout_behavior="@string/appbar_scrolling_view_behavior" -->
 
 </LinearLayout>
+</ScrollView>

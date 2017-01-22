@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
@@ -28,11 +29,14 @@ public class MainFragment02Buttons extends Fragment {
     private int mHead = 1;  //image number of head part
     private int mBody = 1;  //image number of body part
 
+    private int mMaxWidth = 512;    //init size of images to scale
+    private int mMaxHeight = 512;
+
     Button mPlus;
     Button mMinus;
 
-    Activity mActivity;
-    View mFragmentView;
+    Activity mActivity = null;
+    View mFragmentView = null;
 
     public MainFragment02Buttons() {
     }
@@ -47,6 +51,9 @@ public class MainFragment02Buttons extends Fragment {
             mHat = savedInstanceState.getInt("hatID");
             mHead = savedInstanceState.getInt("headID");
             mBody = savedInstanceState.getInt("bodyID");
+
+            mMaxWidth = savedInstanceState.getInt("maxWidth");
+            mMaxHeight = savedInstanceState.getInt("maxHeight");
         }
 
         // Listener that acts when +\- is clicked
@@ -103,24 +110,25 @@ public class MainFragment02Buttons extends Fragment {
         return view;
     }
 
-    //if we recreate Fragment, start from here
+    @Override   //new version, NO (Activity activity) :\
+    public void onAttach(Context context){
+        super.onAttach(context);
+
+        if(context instanceof Activity){
+            mActivity = (Activity) context;
+        }
+    }
+
+    //
     @Override
     public void onStart(){
         super.onStart();
 
         mFragmentView = getView();
-        if(mFragmentView != null){
+       if(mFragmentView != null){
 
             updateAllTextViews();
-        }
-    }
-
-    @Override   //new version, NO (Activity activity) :\
-    public void onAttach(Context context){
-        super.onAttach(context);
-
-        if(getActivity() != null){
-            mActivity = getActivity();
+            updateMainImage();
         }
     }
 
@@ -129,6 +137,10 @@ public class MainFragment02Buttons extends Fragment {
         savedInstanceState.putInt("hatID", mHat);
         savedInstanceState.putInt("headID", mHead);
         savedInstanceState.putInt("bodyID", mBody);
+
+        //size of images to scale
+        savedInstanceState.putInt("maxWidth",mMaxWidth);
+        savedInstanceState.putInt("maxHeight",mMaxHeight);
     }
 
     //@param hat image number
@@ -166,6 +178,7 @@ public class MainFragment02Buttons extends Fragment {
         return num;
     }
 
+    //no, we don't need any locale - just integer_to_string
     public void updateAllTextViews(){
         TextView textViewHat = (TextView) mFragmentView.findViewById(R.id.textView_hat_number);
         textViewHat.setText(Integer.toString(mHat));
@@ -185,10 +198,12 @@ public class MainFragment02Buttons extends Fragment {
             int headImage = HeadsData.getImageFromData(mHead);
             int bodyImage = BodysData.getImageFromData(mBody);
 
+            //get chosen resources
             Drawable drawableHat = ResourcesCompat.getDrawable(getResources(), hatImage, null);
             Drawable drawableHead = ResourcesCompat.getDrawable(getResources(), headImage, null);
             Drawable drawableBody = ResourcesCompat.getDrawable(getResources(), bodyImage, null);
 
+            //try get Bitmap
             Bitmap bitmapHat = null;
             Bitmap bitmapHead = null;
             Bitmap bitmapBody = null;
@@ -204,25 +219,42 @@ public class MainFragment02Buttons extends Fragment {
                 return;
             }
 
-            Bitmap scaledBitmapHat = Bitmap.createScaledBitmap(bitmapHat, 512, 512, true);
-            Bitmap scaledBitmapHead = Bitmap.createScaledBitmap(bitmapHead, 512, 512, true);
-            Bitmap scaledBitmapBody = Bitmap.createScaledBitmap(bitmapBody, 512, 512, true);
+            //imageView is empty, after restart (change orientation)
+            if(imageView.getWidth() > 0){
+                mMaxWidth = imageView.getWidth();
+            }
+
+            if(imageView.getHeight() > 0){
+                mMaxHeight = imageView.getHeight();
+            }
+
+            //scale for identical view
+            Bitmap scaledBitmapHat = Bitmap.createScaledBitmap(bitmapHat, mMaxWidth, mMaxHeight, true);
+            Bitmap scaledBitmapHead = Bitmap.createScaledBitmap(bitmapHead, mMaxWidth, mMaxHeight, true);
+            Bitmap scaledBitmapBody = Bitmap.createScaledBitmap(bitmapBody, mMaxWidth, mMaxHeight, true);
 
             Bitmap combineImages = overlay(scaledBitmapBody, scaledBitmapHead, scaledBitmapHat);
             if (combineImages != null) {
                 imageView.setImageBitmap(combineImages);
+            }else{
+                imageView.setImageResource(R.drawable.no_avatar);
             }
         }
     }
 
     //we need to overlap all 3 images - hat, head, body in 1
+    // @param Bitmap - bottom image,
+    // @param Bitmap - middle image,
+    // @param Bitmap - top image,
+    // @result Bitmap - combined image from input
+    @Nullable
     public static Bitmap overlay(Bitmap bmp1Body, Bitmap bmp2Head, Bitmap bmp3Hat)
     {
         try
         {
             //TODO: our images is same size 512 - no need to worry here
-            int maxWidth = (bmp1Body.getWidth() > bmp2Head.getWidth() ? bmp1Body.getWidth() : bmp2Head.getWidth());
-            int maxHeight = (bmp1Body.getHeight() > bmp2Head.getHeight() ? bmp1Body.getHeight() : bmp2Head.getHeight());
+            int maxWidth = bmp1Body.getWidth();
+            int maxHeight = bmp1Body.getHeight();
 
             Bitmap bmOverlay = Bitmap.createBitmap(maxWidth, maxHeight, bmp1Body.getConfig());
             Canvas canvas = new Canvas(bmOverlay);
