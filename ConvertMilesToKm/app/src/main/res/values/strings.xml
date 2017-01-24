@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">ConvertMilesToKm</string>
+
+    <string name="hello">Welcome to my Converter!</string>
+
+    <string name="km">Km</string>
+    <string name="miles">Miles</string>
+
+    <string name="numbers_hint">0.0</string>
+
+    <string name="button_convert_km_miles">Convert to Miles</string>
+    <string name="button_convert_miles_km">Convert to Km</string>
+
+</resources>
