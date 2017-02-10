@@ -143,21 +143,30 @@ public class MainFragment02Buttons extends Fragment {
         savedInstanceState.putInt("maxHeight",mMaxHeight);
     }
 
-    //@param hat image number
+    /**
+    * @param hat image number
+     */
     public void setHat(int hat){
         mHat = hat;
     }
 
-    //@param head image number
+    /**
+    * @param head image number
+     */
     public void setHead(int head){
         mHead = head;
     }
 
-    //@param body image number
+    /**
+     * @param body image number
+     */
     public void setBody(int body){
         mBody = body;
     }
 
+    /** rotate numbers negative -
+     *
+     * */
     public int decreaseNumber(int num, int limit){
 
         if(num == 1){
@@ -168,6 +177,8 @@ public class MainFragment02Buttons extends Fragment {
         return num;
     }
 
+    /** rotate numbers positive +
+     * */
     public int increaseNumber(int num, int limit){
 
         if(num == limit){
@@ -178,7 +189,9 @@ public class MainFragment02Buttons extends Fragment {
         return num;
     }
 
-    //no, we don't need any locale - just integer_to_string
+    /**
+     * no, we don't need any locale - just integer_to_string
+     */
     public void updateAllTextViews(){
         TextView textViewHat = (TextView) mFragmentView.findViewById(R.id.textView_hat_number);
         textViewHat.setText(Integer.toString(mHat));
@@ -190,6 +203,9 @@ public class MainFragment02Buttons extends Fragment {
         textViewBody.setText(Integer.toString(mBody));
     }
 
+    /**
+     *
+     * */
     public void updateMainImage(){
         if(mActivity != null) {
             //set new IDs
@@ -209,16 +225,21 @@ public class MainFragment02Buttons extends Fragment {
             Drawable drawableHead = ResourcesCompat.getDrawable(getResources(), headImage, null);
             Drawable drawableBody = ResourcesCompat.getDrawable(getResources(), bodyImage, null);
 
+            if(drawableHat == null || drawableHead == null || drawableBody == null){
+                return;
+            }
+
             //try get Bitmap
-            Bitmap bitmapHat = null;
-            Bitmap bitmapHead = null;
-            Bitmap bitmapBody = null;
+            Bitmap bitmapHat;
+            Bitmap bitmapHead;
+            Bitmap bitmapBody;
             try {
                 bitmapHat = ((BitmapDrawable) drawableHat).getBitmap();
                 bitmapHead = ((BitmapDrawable) drawableHead).getBitmap();
                 bitmapBody = ((BitmapDrawable) drawableBody).getBitmap();
             }catch (NullPointerException ex){
                 Log.d("Fragment2: ",ex.getMessage());
+                return;
             }
 
             if(bitmapHat == null || bitmapHead == null || bitmapBody == null){
@@ -248,11 +269,12 @@ public class MainFragment02Buttons extends Fragment {
         }
     }
 
-    //we need to overlap all 3 images - hat, head, body in 1
-    // @param Bitmap - bottom image,
-    // @param Bitmap - middle image,
-    // @param Bitmap - top image,
-    // @result Bitmap - combined image from input
+    /**we need to overlap all 3 images - hat, head, body in 1
+    * @param bmp1Body - bottom image,
+    * @param bmp2Head - middle image,
+    * @param bmp3Hat - top image,
+    * @return Bitmap - combined image from input
+    */
     @Nullable
     public static Bitmap overlay(Bitmap bmp1Body, Bitmap bmp2Head, Bitmap bmp3Hat)
     {
