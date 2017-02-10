@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.NumberPicker;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,12 +22,14 @@ public class MainActivity extends AppCompatActivity {
         //forming array of text to put inside
         String[] possibleStrings = {
                 "Android",
-                "Checklist",
+                "Google",
                 "Coursera"
         };
         mPossible.setDisplayedValues(possibleStrings);
         mPossible.setMinValue(0);
         mPossible.setMaxValue(possibleStrings.length - 1);
+
+        mWebView = (WebView) findViewById(R.id.webView);
     }
 
     /**
@@ -35,5 +38,21 @@ public class MainActivity extends AppCompatActivity {
      * */
     public void navigate(View view){
         int choosedID = mPossible.getValue();
+
+        //load files in /main/assets/ and folder will be /android_asset/
+        mWebView.setWebViewClient(new WebViewClient());
+        switch (choosedID){
+            case 0:
+                mWebView.loadUrl("file:///android_asset/Android.htm");
+                break;
+            case 1:
+                mWebView.loadUrl("file:///android_asset/Google.htm");
+                break;
+            case 2:
+                mWebView.loadUrl("https://coursera.org");
+                break;
+            default:
+                break;
+        }
     }
 }
