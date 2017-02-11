@@ -4,9 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -23,6 +20,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 /**
+ * Created by Puzino Yury (YD)
  * A placeholder fragment containing a simple view.
  */
 public class MainFragment01Image extends Fragment

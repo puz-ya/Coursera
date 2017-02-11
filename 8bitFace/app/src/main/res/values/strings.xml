@@ -33,4 +33,8 @@
     <string name="send_to">Send to:</string>
     <string name="button_share_again">Share again!</string>
 
+    <!-- About dialog -->
+    <string name="about_title">About</string>
+    <string name="about_message">Author: Puzino Yury (puzino.y.a@gmail.com), 2017.</string>
+
 </resources>

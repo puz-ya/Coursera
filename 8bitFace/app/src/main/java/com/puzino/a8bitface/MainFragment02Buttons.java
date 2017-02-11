@@ -1,7 +1,5 @@
 package com.puzino.a8bitface;
 
-import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -20,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
+ * Created by Puzino Yury (YD)
  * A placeholder fragment containing a simple view.
  */
 public class MainFragment02Buttons extends Fragment {

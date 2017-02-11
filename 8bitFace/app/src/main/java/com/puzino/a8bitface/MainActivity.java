@@ -1,17 +1,21 @@
 package com.puzino.a8bitface;
 
+import android.app.AlertDialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity
-//implements MainFragment01Image.FragmentInterface
-{
+public class MainActivity extends AppCompatActivity {
 
     Fragment mFragmentImage;
     Fragment mFragmentNumbers;
@@ -56,12 +60,29 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         switch (id){
-            case R.id.action_settings:
-                break;
+            //case R.id.action_settings:
+//                break;
 
             case R.id.action_about:
+
+                //special email convertation
+                final SpannableString sResult = new SpannableString(getString(R.string.about_message));
+                Linkify.addLinks(sResult, Linkify.EMAIL_ADDRESSES);
+
+                //creating view for AlertDialog
+                final TextView messageTmp = new TextView(this);
+                messageTmp.setText(sResult);
+                messageTmp.setTextSize(TypedValue.COMPLEX_UNIT_PT, 10);
+                messageTmp.setMovementMethod(LinkMovementMethod.getInstance());
+
+                AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
+                .setTitle(getString(R.string.about_title))
+                .setView(messageTmp)
+                .setPositiveButton("OK", null)
+                .create();
+
+                dialog.show();
                 break;
 
             case R.id.action_exit:
@@ -79,28 +100,5 @@ public class MainActivity extends AppCompatActivity
 
         super.onSaveInstanceState(savedInstanceState);
     }
-    /*
 
-    //pressed Save to button
-    @Override
-    public void itemSave(){
-        Intent intent = new Intent(this, SaveActivity.class);
-        //intent.putExtra("hat", mHat);
-        //intent.putExtra("head", mHead);
-        //intent.putExtra("body", mBody);
-        startActivity(intent);
-    }
-
-    //pressed Load
-    @Override
-    public void itemLoad(){
-
-    }
-    //pressed Share button
-    @Override
-    public void itemShare(){
-        Intent intent = new Intent(this, ShareActivity.class);
-        startActivity(intent);
-    }
-    */
 }

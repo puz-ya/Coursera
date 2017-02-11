@@ -1,7 +1,7 @@
 package com.puzino.a8bitface;
 
 /**
- * Created by YD on 22.01.2017.
+ * Created by Puzino Yury (YD) on 22.01.2017.
  */
 
 public class HeadsData {

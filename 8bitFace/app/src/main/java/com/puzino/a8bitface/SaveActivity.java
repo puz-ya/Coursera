@@ -22,7 +22,9 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileInputStream;
 
-import static android.os.Build.VERSION.SDK;
+/**
+ * Created by Puzino Yury (YD)
+ * */
 
 public class SaveActivity extends AppCompatActivity {
 
