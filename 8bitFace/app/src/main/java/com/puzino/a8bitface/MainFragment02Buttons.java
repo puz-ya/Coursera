@@ -1,6 +1,7 @@
 package com.puzino.a8bitface;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -14,11 +15,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -141,6 +140,9 @@ public class MainFragment02Buttons extends Fragment {
         //size of images to scale
         savedInstanceState.putInt("maxWidth",mMaxWidth);
         savedInstanceState.putInt("maxHeight",mMaxHeight);
+
+        //don't forget super
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     /**
@@ -193,13 +195,13 @@ public class MainFragment02Buttons extends Fragment {
      * no, we don't need any locale - just integer_to_string
      */
     public void updateAllTextViews(){
-        TextView textViewHat = (TextView) mFragmentView.findViewById(R.id.textView_hat_number);
+        TextView textViewHat = (TextView) getView().findViewById(R.id.textView_hat_number);
         textViewHat.setText(Integer.toString(mHat));
 
-        TextView textViewHead = (TextView) mFragmentView.findViewById(R.id.textView_head_number);
+        TextView textViewHead = (TextView) getView().findViewById(R.id.textView_head_number);
         textViewHead.setText(Integer.toString(mHead));
 
-        TextView textViewBody = (TextView) mFragmentView.findViewById(R.id.textView_body_number);
+        TextView textViewBody = (TextView) getView().findViewById(R.id.textView_body_number);
         textViewBody.setText(Integer.toString(mBody));
     }
 
@@ -208,12 +210,8 @@ public class MainFragment02Buttons extends Fragment {
      * */
     public void updateMainImage(){
         if(mActivity != null) {
-            //set new IDs
-            mActivity.setHat(mHat);
-            mActivity.setHead(mHead);
-            mActivity.setBody(mBody);
 
-            //now get ImageView and set Bitmaps
+            //get ImageView and set Bitmaps
             ImageView imageView = (ImageView) mActivity.findViewById(R.id.imageView);
 
             int hatImage = HatsData.getImageFromData(mHat);

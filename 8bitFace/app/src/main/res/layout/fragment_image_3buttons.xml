@@ -20,12 +20,14 @@
             android:text="@string/button_save"
             />
 
+        <!--
         <Button
             android:id="@+id/button_load"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/button_load"
             />
+            -->
 
         <Button
             android:id="@+id/button_share"

@@ -22,7 +22,15 @@
     <string name="textView_body_number">01</string>
 
     <string name="help">Help!</string>
-    <string name="title_activity_save">SaveActivity</string>
-    <string name="title_activity_share">ShareActivity</string>
+    <string name="title_activity_save">Save to...</string>
+    <string name="title_activity_share">Share with...</string>
+
+    <!-- Save Activity -->
+    <string name="button_save_internal">Save to gallery</string>
+    <!-- <string name="button_save_sd">Save to SD gallery</string> -->
+
+    <!-- Share Activirty -->
+    <string name="send_to">Send to:</string>
+    <string name="button_share_again">Share again!</string>
 
 </resources>

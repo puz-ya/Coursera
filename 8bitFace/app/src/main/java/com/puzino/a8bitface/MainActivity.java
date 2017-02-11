@@ -1,21 +1,20 @@
 package com.puzino.a8bitface;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
-implements MainFragment01Image.FragmentInterface{
+//implements MainFragment01Image.FragmentInterface
+{
 
-    private int mHat = 1;
-    private int mHead = 1;
-    private int mBody = 1;
+    Fragment mFragmentImage;
+    Fragment mFragmentNumbers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,15 +24,21 @@ implements MainFragment01Image.FragmentInterface{
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        //fragment: image with 3 buttons
+        mFragmentImage = fragmentManager.findFragmentById(R.id.fragment_image_3buttons);
+        //fragment: buttons + \ - , changing ids
+        mFragmentNumbers = new MainFragment02Buttons(); //fragmentManager.findFragmentById(R.id.fragment_select_images);
+
         if(savedInstanceState != null){
-            mHat = savedInstanceState.getInt("hatID");
-            mHead = savedInstanceState.getInt("headID");
-            mBody = savedInstanceState.getInt("bodyID");
+            mFragmentImage = fragmentManager.getFragment(savedInstanceState, "fragmentImage");
+            mFragmentNumbers = fragmentManager.getFragment(savedInstanceState, "fragmentNumbers");
         }
 
-        FragmentManager fragmentManager = getFragmentManager();
-        Fragment fr1 = fragmentManager.findFragmentById(R.id.fragment_image_3buttons);
-        Fragment fr2 = fragmentManager.findFragmentById(R.id.fragment_select_images);
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(R.id.fragment_select_images, mFragmentNumbers, "fragmentNum");   //added Tag to fragment
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        ft.commit();
 
     }
 
@@ -67,32 +72,22 @@ implements MainFragment01Image.FragmentInterface{
         return super.onOptionsItemSelected(item);
     }
 
-
-    //setters for this activity and fragment2
-    public void setHat(int input){
-        mHat = input;
-    }
-    public void setHead(int input){
-        mHead = input;
-    }
-    public void setBody(int input){
-        mBody = input;
-    }
-
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState){
-        savedInstanceState.putInt("hatID", mHat);
-        savedInstanceState.putInt("headID", mHead);
-        savedInstanceState.putInt("bodyID", mBody);
+        getSupportFragmentManager().putFragment(savedInstanceState,"fragmentImage", mFragmentImage);
+        getSupportFragmentManager().putFragment(savedInstanceState,"fragmentNumbers", mFragmentNumbers);
+
+        super.onSaveInstanceState(savedInstanceState);
     }
+    /*
 
     //pressed Save to button
     @Override
     public void itemSave(){
         Intent intent = new Intent(this, SaveActivity.class);
-        intent.putExtra("hat", mHat);
-        intent.putExtra("head", mHead);
-        intent.putExtra("body", mBody);
+        //intent.putExtra("hat", mHat);
+        //intent.putExtra("head", mHead);
+        //intent.putExtra("body", mBody);
         startActivity(intent);
     }
 
@@ -107,5 +102,5 @@ implements MainFragment01Image.FragmentInterface{
         Intent intent = new Intent(this, ShareActivity.class);
         startActivity(intent);
     }
-
+    */
 }
