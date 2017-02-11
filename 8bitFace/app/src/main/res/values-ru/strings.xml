@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">8bitface</string>
+
+    <string name="action_settings">Параметры</string>
+    <string name="action_about">О нас</string>
+    <string name="action_exit">Выход</string>
+
+    <string name="button_save">Сохранить в&#8230;</string>
+    <string name="button_load">Загрузить</string>
+    <string name="button_share">Поделиться</string>
+
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+
+    <string name="textView_hat">Шляпа</string>
+    <string name="textView_hat_number">01</string>
+
+    <string name="textView_head">Голова</string>
+    <string name="textView_head_number">01</string>
+
+    <string name="textView_body">Тело</string>
+    <string name="textView_body_number">01</string>
+
+    <string name="help">Помогите!</string>
+    <string name="title_activity_save">Сохранить в...</string>
+    <string name="title_activity_share">Поделиться с...</string>
+
+    <!-- Save Activity -->
+    <string name="button_save_internal">Сохранить в Галерею</string>
+    <!-- <string name="button_save_sd">Сохранить на SD</string> -->
+
+    <!-- Share Activirty -->
+    <string name="send_to">Отправить:</string>
+    <string name="button_share_again">Поделиться снова!</string>
+
+    <!-- About dialog -->
+    <string name="about_title">О нас</string>
+    <string name="about_message">Автор: Пузино Юрий (puzino.y.a@gmail.com), 2017.</string>
+
+    <!-- Help Dialog -->
+    <string name="help_title">Помощь</string>
+    <string name="help_message">Не знаете, что делать? \n
+        \n
+        Жмите на "+" или "-" и смотрите, как изменяется ваш аватар! \n
+        \n
+        Если хотите, можете Сохранить изображение в галерею. \n
+        \n
+        И вы можете Поделиться им через ваши приложения на телефоне! \n
+        \n
+        Классно, правда? :)
+    </string>
+
+</resources>

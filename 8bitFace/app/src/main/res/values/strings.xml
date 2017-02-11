@@ -37,4 +37,17 @@
     <string name="about_title">About</string>
     <string name="about_message">Author: Puzino Yury (puzino.y.a@gmail.com), 2017.</string>
 
+    <!-- Help Dialog -->
+    <string name="help_title">Help</string>
+    <string name="help_message">Don\'t know what to do? \n
+        \n
+        Push "+" or "-" buttons and see how your avatar will change! \n
+        \n
+        If you want, you can SAVE your image to your gallery. \n
+        \n
+        And you can SHARE it with apps on your phone! \n
+        \n
+        Great, right? :)
+    </string>
+
 </resources>

@@ -1,5 +1,6 @@
 package com.puzino.a8bitface;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -32,6 +33,7 @@ public class MainFragment02Buttons extends Fragment {
 
     Button mPlus;
     Button mMinus;
+    Button mButtonHelp;
 
     MainActivity mActivity = null;
     View mFragmentView = null;
@@ -81,6 +83,11 @@ public class MainFragment02Buttons extends Fragment {
                         mBody = increaseNumber(mBody, BodysData.mBodysDatas.length);
                         break;
 
+                    //if we call for Help
+                    case R.id.button_help:
+                        showHelpMe();
+                        break;
+
                 }
                 //update all textViews
                 updateAllTextViews();
@@ -104,6 +111,10 @@ public class MainFragment02Buttons extends Fragment {
         mPlus.setOnClickListener(mListener);
         mPlus = (Button) view.findViewById(R.id.increase_body);
         mPlus.setOnClickListener(mListener);
+
+        //help button shows dialog
+        mButtonHelp = (Button) view.findViewById(R.id.button_help);
+        mButtonHelp.setOnClickListener(mListener);
 
         return view;
     }
@@ -294,5 +305,16 @@ public class MainFragment02Buttons extends Fragment {
             e.printStackTrace();
             return null;
         }
+    }
+
+    private void showHelpMe(){
+
+        AlertDialog dialog = new AlertDialog.Builder(getActivity())
+                .setTitle(getString(R.string.help_title))
+                .setMessage(getString(R.string.help_message))
+                .setPositiveButton("OK", null)
+                .create();
+
+        dialog.show();
     }
 }
